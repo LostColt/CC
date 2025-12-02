@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class of 2026: The Journey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Montserrat for headlines (matches Gotham), EB Garamond for body -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --gulliver-blue: #003057;
+            --gulliver-gray: #707271;
+            --white: #ffffff;
+            --transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: #1a1a1a;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* CONTAINER */
+        .deck-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: white;
+            overflow: hidden;
+        }
+
+        /* SLIDE COMMON STYLES */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            display: grid;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* TYPOGRAPHY */
+        h1 {
+            font-size: 8rem;
+            line-height: 0.9;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -3px;
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 4rem;
+            line-height: 1;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            color: var(--gulliver-blue);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.8rem;
+            line-height: 1.4;
+            color: #333;
+        }
+
+        .subtitle {
+            font-family: 'EB Garamond', serif;
+            font-size: 2.5rem;
+            font-style: italic;
+            color: var(--white);
+            opacity: 0.9;
+        }
+
+        /* OVERLAYS */
+        .overlay-dim {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,48,87,0.8));
+        }
+
+        .overlay-blue {
+            background: rgba(0, 48, 87, 0.92);
+        }
+
+        /* --- SLIDE SPECIFIC LAYOUTS --- */
+
+        /* SLIDE 1: INTRO */
+        .slide-hero {
+            background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+        }
+        .hero-content {
+            position: absolute;
+            bottom: 10%;
+            left: 5%;
+            z-index: 2;
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, rgba(0,48,87,0.9) 0%, rgba(0,0,0,0) 60%);
+        }
+
+        /* SLIDE 2: FIT (Full Image with Floating Card) */
+        .slide-fit {
+            background: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+        }
+        .card-floating {
+            position: absolute;
+            top: 50%;
+            right: 10%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.95);
+            padding: 60px;
+            width: 40%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            border-left: 10px solid var(--gulliver-blue);
+        }
+
+        /* SLIDE 3: PARTNERSHIP (Split) */
+        .slide-partner {
+            grid-template-columns: 40% 60%;
+        }
+        .partner-text {
+            background: var(--gulliver-blue);
+            color: white;
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .partner-visual {
+            background: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            position: relative;
+        }
+        .venn-circle {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat';
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--gulliver-blue);
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* SLIDE 4: ICEBERG (Full Graphic) */
+        .slide-iceberg {
+            background: var(--gulliver-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .iceberg-img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1503942142281-94af0ade875a?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            opacity: 0.4;
+        }
+        .iceberg-content {
+            z-index: 2;
+            text-align: center;
+            color: white;
+        }
+        .iceberg-line {
+            width: 80vw;
+            height: 2px;
+            background: white;
+            margin: 40px auto;
+            position: relative;
+        }
+        .iceberg-line::after { content: 'WATER LINE'; position: absolute; right: 0; top: -25px; font-size: 0.8rem; letter-spacing: 2px; }
+
+        /* SLIDE 5: THE LIST (Bento Grid) */
+        .slide-list {
+            grid-template-columns: 1fr 1fr 1fr;
+            background: #f4f4f4;
+        }
+        .list-col {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: 0.3s;
+            position: relative;
+            border-right: 1px solid rgba(0,0,0,0.1);
+        }
+        .list-col:hover { flex-grow: 1.2; background: white; }
+        .list-col h2 { font-size: 3rem; margin-bottom: 10px; color: var(--gulliver-blue); }
+        .list-col .number { font-size: 6rem; font-weight: 900; opacity: 0.1; position: absolute; top: 20px; left: 20px; }
+
+        /* SLIDE 6: ESSAYS (Intimate) */
+        .slide-essay {
+            background: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+        }
+        .essay-overlay {
+            position: absolute;
+            left: 0; top: 0; height: 100%; width: 50%;
+            background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
+            display: flex;
+            align-items: center;
+            padding-left: 80px;
+        }
+
+        /* SLIDE 7: CONTROL (Diagram) */
+        .slide-control {
+            background: white;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .control-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 50px;
+        }
+        .control-yes { background: #e0f2fe; color: var(--gulliver-blue); }
+        .control-no { background: #f1f5f9; color: #94a3b8; }
+        .circle-icon {
+            width: 120px; height: 120px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 3rem; margin-bottom: 30px;
+            background: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        /* SLIDE 8: END */
+        .slide-end {
+            background: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .end-box {
+            background: rgba(0, 48, 87, 0.95);
+            padding: 80px;
+            color: white;
+            border: 2px solid white;
+        }
+
+        /* CONTROLS */
+        .nav-controls {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+        }
+        .nav-btn {
+            background: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            color: var(--gulliver-blue);
+            font-size: 1.2rem;
+            display: flex; justify-content: center; align-items: center;
+            transition: 0.3s;
+        }
+        .nav-btn:hover { transform: scale(1.1); }
+
+    </style>
+</head>
+<body>
+
+    <div class="deck-container">
+
+        <!-- SLIDE 1: INTRO -->
+        <div class="slide slide-hero active">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <p style="color:white; letter-spacing: 4px; font-weight: 700; text-transform: uppercase;">Class of 2026</p>
+                <h1>College<br>Kick-Off</h1>
+                <p class="subtitle">Finding Your Best Fit</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: THE GOAL -->
+        <div class="slide slide-fit">
+            <div class="card-floating">
+                <h2>Not the "Best" College.</h2>
+                <h2 style="color: #333;">The Best College <span style="font-family: 'EB Garamond'; font-style: italic; color: var(--gulliver-blue);">For You.</span></h2>
+                <div style="margin-top: 40px; display: flex; justify-content: space-between;">
+                    <div style="text-align: center;">
+                        <i class="fa-solid fa-brain" style="font-size: 2rem; color: var(--gulliver-blue); margin-bottom: 10px;"></i>
+                        <h3>Academics</h3>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fa-solid fa-location-dot" style="font-size: 2rem; color: var(--gulliver-blue); margin-bottom: 10px;"></i>
+                        <h3>Location</h3>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fa-solid fa-heart" style="font-size: 2rem; color: var(--gulliver-blue); margin-bottom: 10px;"></i>
+                        <h3>Vibe</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: PARTNERSHIP -->
+        <div class="slide slide-partner">
+            <div class="partner-text">
+                <h2 style="color: white;">A Part-<br>ner-<br>ship.</h2>
+                <p style="color: rgba(255,255,255,0.8); margin-top: 20px;">We are a team. Each member plays a specific role in this journey.</p>
+            </div>
+            <div class="partner-visual">
+                <div class="venn-circle" style="top: 20%; left: 10%;">Student</div>
+                <div class="venn-circle" style="top: 20%; right: 10%;">Family</div>
+                <div class="venn-circle" style="bottom: 20%; left: 50%; transform: translateX(-50%); background: var(--gulliver-blue); color: white;">Counselor</div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: ICEBERG -->
+        <div class="slide slide-iceberg">
+            <div class="iceberg-img"></div>
+            <div class="iceberg-content">
+                <h1 style="font-size: 15rem; opacity: 0.2;">GPA</h1>
+                <div class="iceberg-line"></div>
+                <h2>Rigor. Trends. Story.</h2>
+                <p style="color: white; font-size: 2rem;">"What lies beneath matters most."</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: THE LIST -->
+        <div class="slide slide-list">
+            <div class="list-col">
+                <span class="number">01</span>
+                <h3>High Probability</h3>
+                <h2>Likely</h2>
+                <p>2+ Schools where your profile is strong.</p>
+            </div>
+            <div class="list-col" style="background: white;">
+                <span class="number">02</span>
+                <h3>Solid Match</h3>
+                <h2>Target</h2>
+                <p>6-8 Schools that align with your profile.</p>
+            </div>
+            <div class="list-col">
+                <span class="number">03</span>
+                <h3>The Reach</h3>
+                <h2>Unpredictable</h2>
+                <p>1-3 Schools that are a stretch for anyone.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: ESSAYS -->
+        <div class="slide slide-essay">
+            <div class="essay-overlay">
+                <div>
+                    <h2 style="font-size: 5rem; margin-bottom: 10px;">650<br>Words.</h2>
+                    <h3 style="color: #555;">To find your voice.</h3>
+                    <p style="max-width: 500px; margin-top: 30px;">It's not about impressing them with big words. It's about showing them who you actually are.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: CONTROL -->
+        <div class="slide slide-control">
+            <div class="control-side control-yes">
+                <div class="circle-icon"><i class="fa-solid fa-check" style="color: var(--gulliver-blue);"></i></div>
+                <h2>You Control</h2>
+                <ul style="list-style: none; margin-top: 30px;">
+                    <li><p>Your Grades</p></li>
+                    <li><p>Your Essays</p></li>
+                    <li><p>Your Interest</p></li>
+                </ul>
+            </div>
+            <div class="control-side control-no">
+                <div class="circle-icon"><i class="fa-solid fa-xmark" style="color: #94a3b8;"></i></div>
+                <h2 style="color: #94a3b8;">You Don't</h2>
+                <ul style="list-style: none; margin-top: 30px; opacity: 0.6;">
+                    <li><p>Priorities</p></li>
+                    <li><p>Yield Rates</p></li>
+                    <li><p>Legacy</p></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: END -->
+        <div class="slide slide-end">
+            <div class="hero-overlay" style="background: rgba(0,0,0,0.4);"></div>
+            <div class="end-box" style="z-index: 2;">
+                <h1>Let's Start.</h1>
+                <p style="color: white; margin-bottom: 30px;">Check your email for the checklist.</p>
+                <div style="background: white; padding: 20px; display: inline-block;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=GulliverKickOff" alt="QR Code">
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="nav-controls">
+            <button class="nav-btn" onclick="prevSlide()"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="nav-btn" onclick="nextSlide()"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+    </script>
+</body>
+</html>
