@@ -106,10 +106,6 @@
             background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,48,87,0.8));
         }
 
-        .overlay-blue {
-            background: rgba(0, 48, 87, 0.92);
-        }
-
         /* --- SLIDE SPECIFIC LAYOUTS --- */
 
         /* SLIDE 1: INTRO */
@@ -128,56 +124,77 @@
             background: linear-gradient(45deg, rgba(0,48,87,0.9) 0%, rgba(0,0,0,0) 60%);
         }
 
-        /* SLIDE 2: FIT (Full Image with Floating Card) */
+        /* SLIDE 2: FIT (REIMAGINED: Editorial Split) */
         .slide-fit {
-            background: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            display: grid;
+            grid-template-columns: 55% 45%; /* Image heavy */
+            background: white;
         }
-        .card-floating {
-            position: absolute;
-            top: 50%;
-            right: 10%;
-            transform: translateY(-50%);
-            background: rgba(255,255,255,0.95);
-            padding: 60px;
-            width: 40%;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            border-left: 10px solid var(--gulliver-blue);
+        .fit-image-side {
+            /* CORRECTED IMAGE: Group sitting on stairs (ID: B2vmYGtilHc) */
+            background: url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            position: relative;
         }
-
-        /* SLIDE 3: PARTNERSHIP (Split) */
-        .slide-partner {
-            grid-template-columns: 40% 60%;
-        }
-        .partner-text {
-            background: var(--gulliver-blue);
-            color: white;
+        .fit-content-side {
             padding: 80px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
-        .partner-visual {
-            background: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
-            position: relative;
-        }
-        .venn-circle {
-            position: absolute;
-            width: 250px;
-            height: 250px;
-            border-radius: 50%;
+        .fit-icon-row {
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-family: 'Montserrat';
-            font-weight: 700;
+            margin-top: 40px;
+            gap: 20px;
+        }
+        .fit-icon-circle {
+            width: 70px; height: 70px;
+            background: var(--gulliver-blue);
+            border-radius: 50%;
+            color: white;
+            display: flex; justify-content: center; align-items: center;
             font-size: 1.5rem;
-            color: var(--gulliver-blue);
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            flex-shrink: 0;
         }
 
-        /* SLIDE 4: ICEBERG (Full Graphic) */
+        /* SLIDE 3: PARTNERSHIP */
+        .slide-partner {
+            background: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .partner-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 48, 87, 0.85);
+        }
+        .partner-content {
+            z-index: 2;
+            color: white;
+            width: 80%;
+        }
+        .role-container {
+            display: flex;
+            justify-content: center;
+            gap: 80px;
+            margin-top: 60px;
+        }
+        .role-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .role-icon {
+            font-size: 4rem;
+            color: white;
+            opacity: 0.9;
+        }
+
+        /* SLIDE 4: ICEBERG */
         .slide-iceberg {
             background: var(--gulliver-blue);
             display: flex;
@@ -206,7 +223,38 @@
         }
         .iceberg-line::after { content: 'WATER LINE'; position: absolute; right: 0; top: -25px; font-size: 0.8rem; letter-spacing: 2px; }
 
-        /* SLIDE 5: THE LIST (Bento Grid) */
+        /* SLIDE 5: THE IMPACT (EXTRACURRICULARS) */
+        .slide-impact {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+        }
+        .impact-image {
+            /* CORRECTED IMAGE: Woman holding paint brush (ID: hE8Mog4qK4Y) */
+            background: url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+        }
+        .impact-content {
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--gulliver-gray); /* Using Gray to differentiate */
+            color: white;
+        }
+        .impact-list {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .impact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.3rem;
+        }
+
+        /* SLIDE 6: THE LIST */
         .slide-list {
             grid-template-columns: 1fr 1fr 1fr;
             background: #f4f4f4;
@@ -224,20 +272,20 @@
         .list-col h2 { font-size: 3rem; margin-bottom: 10px; color: var(--gulliver-blue); }
         .list-col .number { font-size: 6rem; font-weight: 900; opacity: 0.1; position: absolute; top: 20px; left: 20px; }
 
-        /* SLIDE 6: ESSAYS (Intimate) */
+        /* SLIDE 7: ESSAYS */
         .slide-essay {
             background: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
         }
         .essay-overlay {
             position: absolute;
-            left: 0; top: 0; height: 100%; width: 50%;
+            left: 0; top: 0; height: 100%; width: 55%; /* Wider to fit text */
             background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
             display: flex;
             align-items: center;
             padding-left: 80px;
         }
 
-        /* SLIDE 7: CONTROL (Diagram) */
+        /* SLIDE 8: CONTROL */
         .slide-control {
             background: white;
             display: grid;
@@ -261,9 +309,9 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
 
-        /* SLIDE 8: END */
+        /* SLIDE 9: END */
         .slide-end {
-            background: url('https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
+            background: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -315,23 +363,32 @@
             </div>
         </div>
 
-        <!-- SLIDE 2: THE GOAL -->
+        <!-- SLIDE 2: THE GOAL (UPDATED IMAGE: Stairs) -->
         <div class="slide slide-fit">
-            <div class="card-floating">
-                <h2>Not the "Best" College.</h2>
-                <h2 style="color: #333;">The Best College <span style="font-family: 'EB Garamond'; font-style: italic; color: var(--gulliver-blue);">For You.</span></h2>
-                <div style="margin-top: 40px; display: flex; justify-content: space-between;">
-                    <div style="text-align: center;">
-                        <i class="fa-solid fa-brain" style="font-size: 2rem; color: var(--gulliver-blue); margin-bottom: 10px;"></i>
-                        <h3>Academics</h3>
+            <div class="fit-image-side"></div>
+            <div class="fit-content-side">
+                <h2 style="font-size: 3.5rem; line-height: 1;">Find Your<br>Best Fit.</h2>
+                <p style="margin-top: 20px;">We aren't looking for the "best" college. We are looking for the best college <span style="font-style: italic; color: var(--gulliver-blue); font-weight: 700;">for you.</span></p>
+                
+                <div class="fit-icon-row">
+                    <div class="fit-icon-circle"><i class="fa-solid fa-brain"></i></div>
+                    <div>
+                        <h3 style="margin: 0; font-size: 1.2rem; color: var(--gulliver-blue);">Academics</h3>
+                        <p style="margin: 0; font-size: 1rem;">Major & Curriculum</p>
                     </div>
-                    <div style="text-align: center;">
-                        <i class="fa-solid fa-location-dot" style="font-size: 2rem; color: var(--gulliver-blue); margin-bottom: 10px;"></i>
-                        <h3>Location</h3>
+                </div>
+                <div class="fit-icon-row">
+                    <div class="fit-icon-circle"><i class="fa-solid fa-location-dot"></i></div>
+                    <div>
+                        <h3 style="margin: 0; font-size: 1.2rem; color: var(--gulliver-blue);">Location</h3>
+                        <p style="margin: 0; font-size: 1rem;">Distance & Climate</p>
                     </div>
-                    <div style="text-align: center;">
-                        <i class="fa-solid fa-heart" style="font-size: 2rem; color: var(--gulliver-blue); margin-bottom: 10px;"></i>
-                        <h3>Vibe</h3>
+                </div>
+                <div class="fit-icon-row">
+                    <div class="fit-icon-circle"><i class="fa-solid fa-heart"></i></div>
+                    <div>
+                        <h3 style="margin: 0; font-size: 1.2rem; color: var(--gulliver-blue);">Vibe</h3>
+                        <p style="margin: 0; font-size: 1rem;">Values & Culture</p>
                     </div>
                 </div>
             </div>
@@ -339,14 +396,28 @@
 
         <!-- SLIDE 3: PARTNERSHIP -->
         <div class="slide slide-partner">
-            <div class="partner-text">
-                <h2 style="color: white;">A Part-<br>ner-<br>ship.</h2>
-                <p style="color: rgba(255,255,255,0.8); margin-top: 20px;">We are a team. Each member plays a specific role in this journey.</p>
-            </div>
-            <div class="partner-visual">
-                <div class="venn-circle" style="top: 20%; left: 10%;">Student</div>
-                <div class="venn-circle" style="top: 20%; right: 10%;">Family</div>
-                <div class="venn-circle" style="bottom: 20%; left: 50%; transform: translateX(-50%); background: var(--gulliver-blue); color: white;">Counselor</div>
+            <div class="partner-overlay"></div>
+            <div class="partner-content">
+                <h2 style="color: white; font-size: 5rem;">A Partnership</h2>
+                <p style="color: rgba(255,255,255,0.9); font-size: 2rem;">Collaborating for your success.</p>
+                
+                <div class="role-container">
+                    <div class="role-item">
+                        <i class="fa-solid fa-user role-icon"></i>
+                        <h3 style="color: white; margin: 0;">Student</h3>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 1.2rem; margin: 0;">Driver</p>
+                    </div>
+                    <div class="role-item">
+                        <i class="fa-solid fa-users role-icon"></i>
+                        <h3 style="color: white; margin: 0;">Family</h3>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 1.2rem; margin: 0;">Support</p>
+                    </div>
+                    <div class="role-item">
+                        <i class="fa-solid fa-compass role-icon"></i>
+                        <h3 style="color: white; margin: 0;">Counselor</h3>
+                        <p style="color: rgba(255,255,255,0.7); font-size: 1.2rem; margin: 0;">Guide</p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -361,7 +432,24 @@
             </div>
         </div>
 
-        <!-- SLIDE 5: THE LIST -->
+        <!-- SLIDE 5: THE IMPACT (EXTRACURRICULARS) -->
+        <div class="slide slide-impact">
+            <div class="impact-content">
+                <h2 style="color: white;">Beyond The<br>Classroom.</h2>
+                <p style="color: rgba(255,255,255,0.9); margin-top: 20px;">Colleges review you holistically. It’s not just about what you learn, but how you contribute.</p>
+                <div class="impact-list">
+                    <div class="impact-item"><i class="fa-solid fa-trophy"></i> Athletics</div>
+                    <div class="impact-item"><i class="fa-solid fa-palette"></i> Arts & Portfolio</div>
+                    <div class="impact-item"><i class="fa-solid fa-hand-holding-heart"></i> Service</div>
+                    <div class="impact-item"><i class="fa-solid fa-users"></i> Leadership</div>
+                    <div class="impact-item"><i class="fa-solid fa-briefcase"></i> Internships</div>
+                    <div class="impact-item"><i class="fa-solid fa-campground"></i> Summer Programs</div>
+                </div>
+            </div>
+            <div class="impact-image"></div>
+        </div>
+
+        <!-- SLIDE 6: THE LIST -->
         <div class="slide slide-list">
             <div class="list-col">
                 <span class="number">01</span>
@@ -383,18 +471,25 @@
             </div>
         </div>
 
-        <!-- SLIDE 6: ESSAYS -->
+        <!-- SLIDE 7: ESSAYS -->
         <div class="slide slide-essay">
             <div class="essay-overlay">
                 <div>
-                    <h2 style="font-size: 5rem; margin-bottom: 10px;">650<br>Words.</h2>
-                    <h3 style="color: #555;">To find your voice.</h3>
-                    <p style="max-width: 500px; margin-top: 30px;">It's not about impressing them with big words. It's about showing them who you actually are.</p>
+                    <h2 style="font-size: 5rem; margin-bottom: 10px;">The<br>Essays.</h2>
+                    <h3 style="color: #555;">More than just one.</h3>
+                    
+                    <div style="margin-top: 30px; border-left: 5px solid var(--gulliver-blue); padding-left: 20px;">
+                        <p style="margin-bottom: 5px;"><strong>The Main Essay:</strong> 650 Words</p>
+                        <p style="font-size: 1.2rem; color: #555; margin-bottom: 20px;">Your voice. Your story.</p>
+                        
+                        <p style="margin-bottom: 5px;"><strong>The Supplements:</strong> ~20 Total</p>
+                        <p style="font-size: 1.2rem; color: #555;">"Why us?" • "Why your major?" • "Elaborate on an activity."</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- SLIDE 7: CONTROL -->
+        <!-- SLIDE 8: CONTROL -->
         <div class="slide slide-control">
             <div class="control-side control-yes">
                 <div class="circle-icon"><i class="fa-solid fa-check" style="color: var(--gulliver-blue);"></i></div>
@@ -416,15 +511,15 @@
             </div>
         </div>
 
-        <!-- SLIDE 8: END -->
+        <!-- SLIDE 9: END -->
         <div class="slide slide-end">
             <div class="hero-overlay" style="background: rgba(0,0,0,0.4);"></div>
             <div class="end-box" style="z-index: 2;">
-                <h1>Let's Start.</h1>
-                <p style="color: white; margin-bottom: 30px;">Check your email for the checklist.</p>
-                <div style="background: white; padding: 20px; display: inline-block;">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=GulliverKickOff" alt="QR Code">
-                </div>
+                <h1>Next Steps.</h1>
+                <p style="color: white; margin-bottom: 10px;">1. Check your email for the checklist.</p>
+                <p style="color: white; margin-bottom: 30px;">2. Log into <strong>Maia Learning</strong>.</p>
+                <!-- Large Email Icon -->
+                <i class="fa-solid fa-envelope" style="font-size: 6rem; color: white; display: block; margin: 0 auto 20px auto;"></i>
             </div>
         </div>
 
