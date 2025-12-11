@@ -1,564 +1,764 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class of 2026: The Journey</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Montserrat for headlines (matches Gotham), EB Garamond for body -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>The Common App Guide | Gulliver Prep</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gulliver: {
+                            navy: '#003057', // Confirmed Gulliver Navy
+                            blue: '#00338D', 
+                            light: '#E2E8F0',
+                            accent: '#38BDF8', // Sky Blue for pop
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'], // Editorial serif
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(40px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet">
+
     <style>
-        :root {
-            --gulliver-blue: #003057;
-            --gulliver-gray: #707271;
-            --white: #ffffff;
-            --transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #F8FAFC; color: #1E293B; }
+        h1, h2, h3, h4, .font-serif { font-family: 'Playfair Display', serif; }
+        
+        /* Smooth Scrolling & Scrollbar */
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+        
+        /* 3D Effects */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .group:hover .group-hover\:rotate-y-180 { transform: rotateY(180deg); }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background-color: #1a1a1a;
-            font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
-
-        /* CONTAINER */
-        .deck-container {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-            background: white;
-            overflow: hidden;
-        }
-
-        /* SLIDE COMMON STYLES */
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            display: grid;
-        }
-
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 10;
-        }
-
-        /* TYPOGRAPHY */
-        h1 {
-            font-size: 8rem;
-            line-height: 0.9;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -3px;
-            color: var(--white);
-            margin-bottom: 20px;
-        }
-
-        h2 {
-            font-size: 4rem;
-            line-height: 1;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: -1px;
-            margin-bottom: 20px;
-            color: var(--gulliver-blue);
-        }
-
-        h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            font-family: 'EB Garamond', serif;
-            font-size: 1.8rem;
-            line-height: 1.4;
-            color: #333;
-        }
-
-        .subtitle {
-            font-family: 'EB Garamond', serif;
-            font-size: 2.5rem;
-            font-style: italic;
-            color: var(--white);
-            opacity: 0.9;
-        }
-
-        /* OVERLAYS */
-        .overlay-dim {
-            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,48,87,0.8));
-        }
-
-        /* --- SLIDE SPECIFIC LAYOUTS --- */
-
-        /* SLIDE 1: INTRO */
-        .slide-hero {
-            background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
-        }
-        .hero-content {
-            position: absolute;
-            bottom: 10%;
-            left: 5%;
-            z-index: 2;
-        }
-        .hero-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, rgba(0,48,87,0.9) 0%, rgba(0,0,0,0) 60%);
-        }
-
-        /* SLIDE 2: FIT (REIMAGINED: Editorial Split) */
-        .slide-fit {
-            display: grid;
-            grid-template-columns: 55% 45%; /* Image heavy */
-            background: white;
-        }
-        .fit-image-side {
-            /* CORRECTED IMAGE: Group sitting on stairs (ID: B2vmYGtilHc) */
-            background: url('https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
-            position: relative;
-        }
-        .fit-content-side {
-            padding: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .fit-icon-row {
-            display: flex;
-            align-items: center;
-            margin-top: 40px;
-            gap: 20px;
-        }
-        .fit-icon-circle {
-            width: 70px; height: 70px;
-            background: var(--gulliver-blue);
-            border-radius: 50%;
-            color: white;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-
-        /* SLIDE 3: PARTNERSHIP */
-        .slide-partner {
-            background: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        .partner-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 48, 87, 0.85);
-        }
-        .partner-content {
-            z-index: 2;
-            color: white;
-            width: 80%;
-        }
-        .role-container {
-            display: flex;
-            justify-content: center;
-            gap: 80px;
-            margin-top: 60px;
-        }
-        .role-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-        .role-icon {
-            font-size: 4rem;
-            color: white;
-            opacity: 0.9;
-        }
-
-        /* SLIDE 4: ICEBERG */
-        .slide-iceberg {
-            background: var(--gulliver-blue);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .iceberg-img {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://images.unsplash.com/photo-1503942142281-94af0ade875a?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
-            opacity: 0.4;
-        }
-        .iceberg-content {
-            z-index: 2;
-            text-align: center;
-            color: white;
-        }
-        .iceberg-line {
-            width: 80vw;
-            height: 2px;
-            background: white;
-            margin: 40px auto;
-            position: relative;
-        }
-        .iceberg-line::after { content: 'WATER LINE'; position: absolute; right: 0; top: -25px; font-size: 0.8rem; letter-spacing: 2px; }
-
-        /* SLIDE 5: THE IMPACT (EXTRACURRICULARS) */
-        .slide-impact {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            background: white;
-        }
-        .impact-image {
-            /* CORRECTED IMAGE: Woman holding paint brush (ID: hE8Mog4qK4Y) */
-            background: url('https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
-        }
-        .impact-content {
-            padding: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: var(--gulliver-gray); /* Using Gray to differentiate */
-            color: white;
-        }
-        .impact-list {
-            margin-top: 30px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        .impact-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1.3rem;
-        }
-
-        /* SLIDE 6: THE LIST */
-        .slide-list {
-            grid-template-columns: 1fr 1fr 1fr;
-            background: #f4f4f4;
-        }
-        .list-col {
-            padding: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            transition: 0.3s;
-            position: relative;
-            border-right: 1px solid rgba(0,0,0,0.1);
-        }
-        .list-col:hover { flex-grow: 1.2; background: white; }
-        .list-col h2 { font-size: 3rem; margin-bottom: 10px; color: var(--gulliver-blue); }
-        .list-col .number { font-size: 6rem; font-weight: 900; opacity: 0.1; position: absolute; top: 20px; left: 20px; }
-
-        /* SLIDE 7: ESSAYS */
-        .slide-essay {
-            background: url('https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
-        }
-        .essay-overlay {
-            position: absolute;
-            left: 0; top: 0; height: 100%; width: 55%; /* Wider to fit text */
-            background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0));
-            display: flex;
-            align-items: center;
-            padding-left: 80px;
-        }
-
-        /* SLIDE 8: CONTROL */
-        .slide-control {
-            background: white;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-        }
-        .control-side {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 50px;
-        }
-        .control-yes { background: #e0f2fe; color: var(--gulliver-blue); }
-        .control-no { background: #f1f5f9; color: #94a3b8; }
-        .circle-icon {
-            width: 120px; height: 120px; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 3rem; margin-bottom: 30px;
-            background: white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        }
-
-        /* SLIDE 9: END */
-        .slide-end {
-            background: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        .end-box {
+        
+        .glass-dark {
             background: rgba(0, 48, 87, 0.95);
-            padding: 80px;
-            color: white;
-            border: 2px solid white;
+            backdrop-filter: blur(12px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        /* CONTROLS */
-        .nav-controls {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            z-index: 100;
-            display: flex;
-            gap: 10px;
-        }
-        .nav-btn {
-            background: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            color: var(--gulliver-blue);
-            font-size: 1.2rem;
-            display: flex; justify-content: center; align-items: center;
-            transition: 0.3s;
-        }
-        .nav-btn:hover { transform: scale(1.1); }
-
     </style>
 </head>
-<body>
+<body class="antialiased selection:bg-gulliver-blue selection:text-white">
+    
+    <div id="root"></div>
 
-    <div class="deck-container">
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-        <!-- SLIDE 1: INTRO -->
-        <div class="slide slide-hero active">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <p style="color:white; letter-spacing: 4px; font-weight: 700; text-transform: uppercase;">Class of 2026</p>
-                <h1>College<br>Kick-Off</h1>
-                <p class="subtitle">Finding Your Best Fit</p>
-            </div>
-        </div>
+        // --- ICONS ---
+        const Icon = ({ path, className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                {path}
+            </svg>
+        );
 
-        <!-- SLIDE 2: THE GOAL (UPDATED IMAGE: Stairs) -->
-        <div class="slide slide-fit">
-            <div class="fit-image-side"></div>
-            <div class="fit-content-side">
-                <h2 style="font-size: 3.5rem; line-height: 1;">Find Your<br>Best Fit.</h2>
-                <p style="margin-top: 20px;">We aren't looking for the "best" college. We are looking for the best college <span style="font-style: italic; color: var(--gulliver-blue); font-weight: 700;">for you.</span></p>
-                
-                <div class="fit-icon-row">
-                    <div class="fit-icon-circle"><i class="fa-solid fa-brain"></i></div>
-                    <div>
-                        <h3 style="margin: 0; font-size: 1.2rem; color: var(--gulliver-blue);">Academics</h3>
-                        <p style="margin: 0; font-size: 1rem;">Major & Curriculum</p>
+        const Icons = {
+            ChevronRight: (props) => <Icon {...props} path={<><path d="m9 18 6-6-6-6"/></>} />,
+            ChevronLeft: (props) => <Icon {...props} path={<><path d="m15 18-6-6 6-6"/></>} />,
+            ChevronDown: (props) => <Icon {...props} path={<><path d="m6 9 6 6 6-6"/></>} />,
+            ChevronUp: (props) => <Icon {...props} path={<><path d="m18 15-6-6-6 6"/></>} />,
+            BookOpen: (props) => <Icon {...props} path={<><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></>} />,
+            Mountain: (props) => <Icon {...props} path={<><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></>} />,
+            Lightbulb: (props) => <Icon {...props} path={<><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-1 1.5-2 1.5-3.5A6 6 0 0 0 6 8c0 1 .5 2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></>} />,
+            Heart: (props) => <Icon {...props} path={<><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></>} />,
+            Search: (props) => <Icon {...props} path={<><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></>} />,
+            Sprout: (props) => <Icon {...props} path={<><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.2.4-4.8.3-1.2-.1-2.3-.2-3-1.5"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2Z"/></>} />,
+            PenTool: (props) => <Icon {...props} path={<><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></>} />,
+            CheckCircle2: (props) => <Icon {...props} path={<><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></>} />,
+            XCircle: (props) => <Icon {...props} path={<><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></>} />,
+            ArrowRight: (props) => <Icon {...props} path={<><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></>} />,
+            CornerDownRight: (props) => <Icon {...props} path={<><polyline points="15 10 20 15 15 20"/><path d="M4 4v7a4 4 0 0 0 4 4h12"/></>} />,
+            Pause: (props) => <Icon {...props} path={<><rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/></>} />,
+            ArrowLeftRight: (props) => <Icon {...props} path={<><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></>} />,
+            Minimize2: (props) => <Icon {...props} path={<><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></>} />,
+            Scale: (props) => <Icon {...props} path={<><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></>} />,
+            GitMerge: (props) => <Icon {...props} path={<><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></>} />,
+            Eye: (props) => <Icon {...props} path={<><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></>} />,
+            AlertCircle: (props) => <Icon {...props} path={<><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></>} />,
+            GradCap: (props) => <Icon {...props} path={<><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></>} />,
+            AlertTriangle: (props) => <Icon {...props} path={<><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></>} />
+        };
+
+        const SECTIONS = [
+          { id: 'part1', title: 'Part 1: The Mindset Shift' },
+          { id: 'part2', title: 'Part 2: The Prompts' },
+          { id: 'part3', title: 'Part 3: Finding Material' },
+          { id: 'part4', title: 'Part 4: The Core Problem' },
+          { id: 'part5', title: 'Part 5: The Six Moves' },
+          { id: 'part6', title: 'Part 6: Troubleshooting' },
+          { id: 'part7', title: 'Part 7: Final Encouragement' },
+        ];
+
+        const PROMPTS = [
+          {
+            id: 1,
+            title: "The Identity Story",
+            icon: <Icons.BookOpen className="w-12 h-12 mb-6" />,
+            text: "Some students have a background, identity, interest, or talent that is so meaningful they believe their application would be incomplete without it. If this sounds like you, then please share your story."
+          },
+          {
+            id: 2,
+            title: "The Challenge Story",
+            icon: <Icons.Mountain className="w-12 h-12 mb-6" />,
+            text: "The lessons we take from obstacles we encounter can be fundamental to later success. Recount a time when you faced a challenge, setback, or failure. How did it affect you, and what did you learn from the experience?"
+          },
+          {
+            id: 3,
+            title: "The Belief Story",
+            icon: <Icons.Lightbulb className="w-12 h-12 mb-6" />,
+            text: "Reflect on a time when you questioned or challenged a belief or idea. What prompted your thinking? What was the outcome?"
+          },
+          {
+            id: 4,
+            title: "The Gratitude Story",
+            icon: <Icons.Heart className="w-12 h-12 mb-6" />,
+            text: "Reflect on something that someone has done for you that has made you happy or thankful in a surprising way. How has this gratitude affected or motivated you?"
+          },
+          {
+            id: 5,
+            title: "The Intellectual Story",
+            icon: <Icons.Search className="w-12 h-12 mb-6" />,
+            text: "Describe a topic, idea, or concept you find so engaging that it makes you lose all track of time. Why does it captivate you? What or who do you turn to when you want to learn more?"
+          },
+          {
+            id: 6,
+            title: "The Growth Story",
+            icon: <Icons.Sprout className="w-12 h-12 mb-6" />,
+            text: "Discuss an accomplishment, event, or realization that sparked a period of personal growth and a new understanding of yourself or others."
+          },
+          {
+            id: 7,
+            title: "Your Choice",
+            icon: <Icons.PenTool className="w-12 h-12 mb-6" />,
+            text: "Share an essay on any topic of your choice. It can be one you've already written, one that responds to a different prompt, or one of your own design."
+          }
+        ];
+
+        const ZOOM_CARDS = [
+          {
+            category: "Work",
+            wide: "My job at the coffee shop.",
+            zoom: "The morning a regular customer snapped at me for getting her order wrong, and I realized I'd been going through the motions for weeks."
+          },
+          {
+            category: "Skills",
+            wide: "Learning to play guitar.",
+            zoom: "The specific night my fingers finally hurt less than my desire to play, and I understood what my teacher meant by 'muscle memory'."
+          },
+          {
+            category: "Leadership",
+            wide: "Being Debate Captain.",
+            zoom: "The 30 seconds of silence before I decided to enforce a rule against my friend."
+          }
+        ];
+
+        const SIX_MOVES = [
+          {
+            title: "Interrupt Move",
+            icon: <Icons.Pause className="w-6 h-6" />,
+            action: "Pause to ask the question the moment raises.",
+            example: "Why did this matter more than I expected?"
+          },
+          {
+            title: "Then/Now Move",
+            icon: <Icons.ArrowLeftRight className="w-6 h-6" />,
+            action: "Contrast what you thought then with what you understand now.",
+            example: "Back then I thought X. Now I see it differently."
+          },
+          {
+            title: "Zoom-Out Move",
+            icon: <Icons.Minimize2 className="w-6 h-6" />,
+            action: "Connect the moment to a larger pattern in your life.",
+            example: "This wasn't the first time I'd..."
+          },
+          {
+            title: "Cost Move",
+            icon: <Icons.Scale className="w-6 h-6" />,
+            action: "Name what you gained AND what you lost.",
+            example: "I earned X. I also lost Y."
+          },
+          {
+            title: "Contradiction Move",
+            icon: <Icons.GitMerge className="w-6 h-6" />,
+            action: "Hold two conflicting truths at once.",
+            example: "I felt proud. I also felt uncomfortable."
+          },
+          {
+            title: "Sensory-Anchor Move",
+            icon: <Icons.Eye className="w-6 h-6" />,
+            action: "Return to a concrete detail that carries meaning.",
+            example: "Using a specific sound, image, or sensation as a touchstone."
+          }
+        ];
+
+        const TROUBLESHOOTING = [
+          {
+            title: "Opening Mistakes",
+            content: [
+              { problem: "Throat-Clearing", desc: "\"I have always been the kind of person who...\" (Wasting words on setup)." },
+              { problem: "Generic Opening", desc: "\"I have always been interested in science.\" (Could apply to anyone)." },
+              { problem: "The Fix", desc: "Start late, grab early. Jump into a specific moment within the first sentence.", isFix: true }
+            ]
+          },
+          {
+            title: "Structure Mistakes",
+            content: [
+              { problem: "Resume Format", desc: "Listing accomplishments (\"I organized five fundraisers...\") instead of telling a story." },
+              { problem: "Covering Too Much Ground", desc: "Trying to fit your whole life into 650 words." },
+              { problem: "The Fix", desc: "One moment. One insight. Go deep.", isFix: true }
+            ]
+          },
+          {
+            title: "Content Mistakes",
+            content: [
+              { problem: "Tell, Don't Show", desc: "\"I am a hard worker.\" (Show us the work instead)." },
+              { problem: "Generic Praise", desc: "Praising the school's \"reputation\" without specifics." },
+              { problem: "Trauma Dump", desc: "Focusing 100% on the hardship, 0% on the growth." },
+              { problem: "Humble Bragging", desc: "\"Everyone comes to me for advice.\"" }
+            ]
+          },
+          {
+            title: "Voice Mistakes",
+            content: [
+              { problem: "Resume Language", desc: "Using words like \"facilitated,\" \"leveraged,\" \"endeavored.\"" },
+              { problem: "Thesaurus Syndrome", desc: "Using \"plethora\" or \"myriad\" to sound smart." },
+              { problem: "The Fix", desc: "Use the Coffee Shop Test. Write like you talk to a friend.", isFix: true }
+            ]
+          },
+          {
+            title: "Reflection Mistakes",
+            content: [
+              { problem: "Stating the Lesson", desc: "\"I learned the importance of hard work.\" (Show how you figured it out)." },
+              { problem: "Missing \"So What?\"", desc: "Describing events without explaining why they matter." },
+              { problem: "Fake Insight", desc: "\"I learned to never give up.\" (Generic platitude)." }
+            ]
+          },
+          {
+            title: "Ending Mistakes",
+            content: [
+              { problem: "Restating Everything", desc: "Summarizing what you just said." },
+              { problem: "I'm Ready for College", desc: "\"This is why I'm prepared for the challenges...\" (Don't say this)." },
+              { problem: "Trailing Off", desc: "Ending without closure." }
+            ]
+          },
+          {
+            title: "Revision Mistakes",
+            content: [
+              { problem: "Not Reading Aloud", desc: "Missing rhythm and flow issues." },
+              { problem: "Over-Editing", desc: "Revising until the voice is sterile." },
+              { problem: "Not Using Feedback", desc: "Ignoring advice to improve." }
+            ]
+          }
+        ];
+
+        // --- COMPONENTS ---
+
+        const Section = ({ id, title, children, className = "" }) => (
+            <section id={id} className={`py-24 md:py-32 border-b border-stone-200/50 last:border-0 relative ${className}`}>
+                <div className="absolute top-0 left-0 w-20 h-[1px] bg-gulliver-navy/20"></div>
+                {title && (
+                    <div className="flex items-center gap-4 mb-16 opacity-60">
+                        <span className="text-gulliver-navy font-bold tracking-widest text-xs uppercase">{id.replace('part', 'Part ')}</span>
+                        <div className="h-[1px] w-12 bg-gulliver-navy/30"></div>
+                        <span className="font-serif text-slate-500 italic">{title}</span>
                     </div>
-                </div>
-                <div class="fit-icon-row">
-                    <div class="fit-icon-circle"><i class="fa-solid fa-location-dot"></i></div>
-                    <div>
-                        <h3 style="margin: 0; font-size: 1.2rem; color: var(--gulliver-blue);">Location</h3>
-                        <p style="margin: 0; font-size: 1rem;">Distance & Climate</p>
-                    </div>
-                </div>
-                <div class="fit-icon-row">
-                    <div class="fit-icon-circle"><i class="fa-solid fa-heart"></i></div>
-                    <div>
-                        <h3 style="margin: 0; font-size: 1.2rem; color: var(--gulliver-blue);">Vibe</h3>
-                        <p style="margin: 0; font-size: 1rem;">Values & Culture</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+                )}
+                {children}
+            </section>
+        );
 
-        <!-- SLIDE 3: PARTNERSHIP -->
-        <div class="slide slide-partner">
-            <div class="partner-overlay"></div>
-            <div class="partner-content">
-                <h2 style="color: white; font-size: 5rem;">A Partnership</h2>
-                <p style="color: rgba(255,255,255,0.9); font-size: 2rem;">Collaborating for your success.</p>
-                
-                <div class="role-container">
-                    <div class="role-item">
-                        <i class="fa-solid fa-user role-icon"></i>
-                        <h3 style="color: white; margin: 0;">Student</h3>
-                        <p style="color: rgba(255,255,255,0.7); font-size: 1.2rem; margin: 0;">Driver</p>
-                    </div>
-                    <div class="role-item">
-                        <i class="fa-solid fa-users role-icon"></i>
-                        <h3 style="color: white; margin: 0;">Family</h3>
-                        <p style="color: rgba(255,255,255,0.7); font-size: 1.2rem; margin: 0;">Support</p>
-                    </div>
-                    <div class="role-item">
-                        <i class="fa-solid fa-compass role-icon"></i>
-                        <h3 style="color: white; margin: 0;">Counselor</h3>
-                        <p style="color: rgba(255,255,255,0.7); font-size: 1.2rem; margin: 0;">Guide</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SLIDE 4: ICEBERG -->
-        <div class="slide slide-iceberg">
-            <div class="iceberg-img"></div>
-            <div class="iceberg-content">
-                <h1 style="font-size: 15rem; opacity: 0.2;">GPA</h1>
-                <div class="iceberg-line"></div>
-                <h2>Rigor. Trends. Story.</h2>
-                <p style="color: white; font-size: 2rem;">"What lies beneath matters most."</p>
-            </div>
-        </div>
-
-        <!-- SLIDE 5: THE IMPACT (EXTRACURRICULARS) -->
-        <div class="slide slide-impact">
-            <div class="impact-content">
-                <h2 style="color: white;">Beyond The<br>Classroom.</h2>
-                <p style="color: rgba(255,255,255,0.9); margin-top: 20px;">Colleges review you holistically. It’s not just about what you learn, but how you contribute.</p>
-                <div class="impact-list">
-                    <div class="impact-item"><i class="fa-solid fa-trophy"></i> Athletics</div>
-                    <div class="impact-item"><i class="fa-solid fa-palette"></i> Arts & Portfolio</div>
-                    <div class="impact-item"><i class="fa-solid fa-hand-holding-heart"></i> Service</div>
-                    <div class="impact-item"><i class="fa-solid fa-users"></i> Leadership</div>
-                    <div class="impact-item"><i class="fa-solid fa-briefcase"></i> Internships</div>
-                    <div class="impact-item"><i class="fa-solid fa-campground"></i> Summer Programs</div>
-                </div>
-            </div>
-            <div class="impact-image"></div>
-        </div>
-
-        <!-- SLIDE 6: THE LIST -->
-        <div class="slide slide-list">
-            <div class="list-col">
-                <span class="number">01</span>
-                <h3>High Probability</h3>
-                <h2>Likely</h2>
-                <p>2+ Schools where your profile is strong.</p>
-            </div>
-            <div class="list-col" style="background: white;">
-                <span class="number">02</span>
-                <h3>Solid Match</h3>
-                <h2>Target</h2>
-                <p>6-8 Schools that align with your profile.</p>
-            </div>
-            <div class="list-col">
-                <span class="number">03</span>
-                <h3>The Reach</h3>
-                <h2>Unpredictable</h2>
-                <p>1-3 Schools that are a stretch for anyone.</p>
-            </div>
-        </div>
-
-        <!-- SLIDE 7: ESSAYS -->
-        <div class="slide slide-essay">
-            <div class="essay-overlay">
-                <div>
-                    <h2 style="font-size: 5rem; margin-bottom: 10px;">The<br>Essays.</h2>
-                    <h3 style="color: #555;">More than just one.</h3>
-                    
-                    <div style="margin-top: 30px; border-left: 5px solid var(--gulliver-blue); padding-left: 20px;">
-                        <p style="margin-bottom: 5px;"><strong>The Main Essay:</strong> 650 Words</p>
-                        <p style="font-size: 1.2rem; color: #555; margin-bottom: 20px;">Your voice. Your story.</p>
+        const FlipCard = ({ category, wide, zoom }) => {
+            return (
+                <div className="group h-80 w-full perspective-1000 cursor-pointer">
+                    <div className="relative h-full w-full transition-all duration-700 transform-style-3d group-hover:rotate-y-180">
+                        {/* Front */}
+                        <div className="absolute inset-0 backface-hidden bg-white border border-stone-100 p-8 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-shadow flex flex-col items-center justify-center text-center">
+                            <div className="absolute top-6 right-6 w-2 h-2 rounded-full bg-red-400"></div>
+                            <div className="text-xs font-bold uppercase tracking-[0.2em] text-stone-400 mb-8">{category}</div>
+                            <h4 className="font-serif text-3xl text-stone-800 mb-6">The Wide Shot</h4>
+                            <p className="text-stone-500 italic font-serif leading-relaxed">"{wide}"</p>
+                            <div className="mt-auto pt-6 text-[10px] text-gulliver-blue font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">Tap to Zoom In</div>
+                        </div>
                         
-                        <p style="margin-bottom: 5px;"><strong>The Supplements:</strong> ~20 Total</p>
-                        <p style="font-size: 1.2rem; color: #555;">"Why us?" • "Why your major?" • "Elaborate on an activity."</p>
+                        {/* Back */}
+                        <div className="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-gulliver-navy to-gulliver-blue text-white p-8 rounded-2xl shadow-xl flex flex-col items-center justify-center text-center border border-white/10">
+                            <div className="absolute top-6 right-6 w-2 h-2 rounded-full bg-green-400 shadow-[0_0_10px_rgba(74,222,128,0.5)]"></div>
+                            <div className="text-xs font-bold uppercase tracking-[0.2em] text-blue-200/80 mb-8">{category}</div>
+                            <h4 className="font-serif text-3xl text-white mb-6">The Zoom In</h4>
+                            <p className="text-blue-50 text-sm md:text-base leading-relaxed font-light">"{zoom}"</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const PromptCarousel = () => {
+            const [active, setActive] = useState(0);
+
+            const next = () => setActive((prev) => (prev === PROMPTS.length - 1 ? 0 : prev + 1));
+            const prev = () => setActive((prev) => (prev === 0 ? PROMPTS.length - 1 : prev - 1));
+
+            return (
+                <div className="relative bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-stone-100 p-8 md:p-20 my-16 overflow-hidden flex flex-col justify-center min-h-[600px] group">
+                    {/* Artistic Background Element */}
+                    <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-stone-100/50 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3"></div>
+                    
+                    {/* Big Number */}
+                    <div className="absolute top-8 left-8 md:top-12 md:left-12 font-serif text-9xl text-stone-100 select-none transition-all duration-500 key={active}">
+                        {active + 1}
+                    </div>
+                    
+                    <div className="relative z-10 flex flex-col items-center text-center max-w-3xl mx-auto animate-fade-in key={active}">
+                        <div className="text-gulliver-navy mb-8 transform transition-transform duration-500 hover:scale-110">
+                            {PROMPTS[active].icon}
+                        </div>
+                        <h3 className="text-3xl md:text-5xl font-serif text-gulliver-navy mb-8 leading-tight">{PROMPTS[active].title}</h3>
+                        <p className="text-xl md:text-2xl text-slate-600 leading-relaxed font-light">{PROMPTS[active].text}</p>
+                    </div>
+
+                    <div className="absolute bottom-8 md:bottom-12 left-0 w-full flex justify-center items-center gap-12 z-20">
+                        <button onClick={prev} className="group/btn p-4 rounded-full bg-white border border-stone-200 hover:border-gulliver-navy text-slate-400 hover:text-gulliver-navy transition-all hover:shadow-lg">
+                            <Icons.ChevronLeft className="w-6 h-6 transform group-hover/btn:-translate-x-1 transition-transform" />
+                        </button>
+                        
+                        <div className="flex gap-3">
+                            {PROMPTS.map((_, i) => (
+                                <button 
+                                    key={i} 
+                                    onClick={() => setActive(i)}
+                                    className={`h-1.5 rounded-full transition-all duration-500 ${i === active ? 'w-8 bg-gulliver-navy' : 'w-2 bg-stone-300 hover:bg-stone-400'}`}
+                                />
+                            ))}
+                        </div>
+
+                        <button onClick={next} className="group/btn p-4 rounded-full bg-white border border-stone-200 hover:border-gulliver-navy text-slate-400 hover:text-gulliver-navy transition-all hover:shadow-lg">
+                            <Icons.ChevronRight className="w-6 h-6 transform group-hover/btn:translate-x-1 transition-transform" />
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        const ComparisonTable = () => (
+            <div className="grid md:grid-cols-2 gap-0 my-16 rounded-3xl overflow-hidden shadow-2xl">
+                <div className="bg-white p-12 md:p-16 relative group">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-red-50 rounded-bl-full -mr-16 -mt-16 transition-all group-hover:scale-150 duration-700"></div>
+                    <div className="relative z-10">
+                        <div className="flex items-center gap-4 mb-8 text-red-600 font-bold border-b border-red-100 pb-6">
+                            <Icons.ArrowRight className="w-6 h-6" />
+                            <span className="uppercase tracking-widest text-xs">The Trap</span>
+                        </div>
+                        <h4 className="font-serif text-3xl text-slate-900 mb-6">Chronology</h4>
+                        <p className="text-slate-500 italic mb-8 text-lg leading-relaxed font-serif">
+                            "I joined the robotics team and then we started building the robot and then we competed and then we won the regional championship and then I learned the value of teamwork."
+                        </p>
+                        <p className="text-xs font-bold text-red-500 uppercase tracking-widest flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                            Listing Events
+                        </p>
+                    </div>
+                </div>
+
+                <div className="bg-gulliver-navy p-12 md:p-16 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gulliver-blue opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-400/20 to-transparent"></div>
+                    <div className="relative z-10 text-white">
+                        <div className="flex items-center gap-4 mb-8 text-blue-200 font-bold border-b border-white/10 pb-6">
+                            <Icons.CornerDownRight className="w-6 h-6" />
+                            <span className="uppercase tracking-widest text-xs">The Fix</span>
+                        </div>
+                        <h4 className="font-serif text-3xl text-white mb-6">Reflection</h4>
+                        <p className="text-blue-100 italic mb-8 text-lg leading-relaxed font-serif">
+                            "Stop the tape. Why did that specific moment surprise me? What was I assuming before it happened? What does it reveal about how I see the world?"
+                        </p>
+                        <p className="text-xs font-bold text-blue-300 uppercase tracking-widest flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-blue-300 shadow-[0_0_10px_rgba(147,197,253,0.5)]"></span>
+                            Examining Meaning
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
+        );
 
-        <!-- SLIDE 8: CONTROL -->
-        <div class="slide slide-control">
-            <div class="control-side control-yes">
-                <div class="circle-icon"><i class="fa-solid fa-check" style="color: var(--gulliver-blue);"></i></div>
-                <h2>You Control</h2>
-                <ul style="list-style: none; margin-top: 30px;">
-                    <li><p>Your Grades</p></li>
-                    <li><p>Your Essays</p></li>
-                    <li><p>Your Interest</p></li>
-                </ul>
+        const DiagnosticCard = ({ title, content }) => (
+            <div className="bg-white rounded-2xl p-8 shadow-[0_4px_20px_rgb(0,0,0,0.02)] border border-stone-100 hover:border-gulliver-navy/20 transition-all duration-300 hover:shadow-xl group">
+                <div className="flex items-center justify-between mb-8 border-b border-stone-100 pb-6">
+                    <h4 className="font-serif text-2xl text-gulliver-navy group-hover:text-gulliver-blue transition-colors">{title}</h4>
+                    <div className="p-2 bg-stone-50 rounded-lg group-hover:bg-blue-50 transition-colors">
+                        <Icons.AlertTriangle className="w-5 h-5 text-stone-400 group-hover:text-gulliver-blue" />
+                    </div>
+                </div>
+                <div className="space-y-8">
+                    {content.map((item, idx) => (
+                        <div key={idx} className={`relative ${item.isFix ? 'pt-6 border-t border-dashed border-stone-200' : ''}`}>
+                            <div className="flex gap-4">
+                                <div className={`mt-1 flex-shrink-0 w-1 rounded-full h-auto ${item.isFix ? 'bg-gulliver-navy' : 'bg-red-200'}`}></div>
+                                <div>
+                                    <span className={`block font-bold text-xs uppercase tracking-wider mb-2 ${item.isFix ? 'text-gulliver-navy' : 'text-red-400'}`}>
+                                        {item.problem}
+                                    </span>
+                                    <span className={`text-base leading-relaxed ${item.isFix ? 'text-slate-800 font-medium' : 'text-stone-500'}`}>
+                                        {item.desc}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
-            <div class="control-side control-no">
-                <div class="circle-icon"><i class="fa-solid fa-xmark" style="color: #94a3b8;"></i></div>
-                <h2 style="color: #94a3b8;">You Don't</h2>
-                <ul style="list-style: none; margin-top: 30px; opacity: 0.6;">
-                    <li><p>Priorities</p></li>
-                    <li><p>Yield Rates</p></li>
-                    <li><p>Legacy</p></li>
-                </ul>
-            </div>
-        </div>
+        );
 
-        <!-- SLIDE 9: END -->
-        <div class="slide slide-end">
-            <div class="hero-overlay" style="background: rgba(0,0,0,0.4);"></div>
-            <div class="end-box" style="z-index: 2;">
-                <h1>Next Steps.</h1>
-                <p style="color: white; margin-bottom: 10px;">1. Check your email for the checklist.</p>
-                <p style="color: white; margin-bottom: 30px;">2. Log into <strong>Maia Learning</strong>.</p>
-                <!-- Large Email Icon -->
-                <i class="fa-solid fa-envelope" style="font-size: 6rem; color: white; display: block; margin: 0 auto 20px auto;"></i>
-            </div>
-        </div>
+        const Footer = () => (
+            <footer className="mt-40 bg-white border-t border-stone-100 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gulliver-navy via-gulliver-blue to-gulliver-navy"></div>
+                <div className="max-w-7xl mx-auto px-8 py-24 flex flex-col items-center text-center relative z-10">
+                    <div className="w-16 h-16 bg-gulliver-navy text-white rounded-2xl flex items-center justify-center mb-8 shadow-xl">
+                        <Icons.GradCap className="w-8 h-8" />
+                    </div>
+                    <h4 className="font-serif text-4xl text-gulliver-navy font-bold mb-4 tracking-tight">David Tran</h4>
+                    <p className="text-gulliver-blue uppercase tracking-[0.2em] text-xs font-bold mb-12">College Essay Writing Coach</p>
+                    
+                    <div className="flex flex-col md:flex-row items-center gap-4 md:gap-12 text-stone-500 text-sm font-medium">
+                        <span className="flex items-center gap-3 px-6 py-3 rounded-full bg-stone-50 border border-stone-100">
+                            <span className="w-2 h-2 bg-gulliver-navy rounded-full"></span>
+                            Gulliver Prep
+                        </span>
+                        <a href="mailto:dtran@gulliverprep.org" className="flex items-center gap-3 px-6 py-3 rounded-full bg-stone-50 border border-stone-100 hover:bg-gulliver-navy hover:text-white hover:border-gulliver-navy transition-all duration-300">
+                            dtran@gulliverprep.org
+                        </a>
+                    </div>
+                    
+                    <p className="mt-16 text-stone-300 text-xs font-mono">© 2026 Gulliver Prep. All Rights Reserved.</p>
+                </div>
+            </footer>
+        );
 
-        <!-- CONTROLS -->
-        <div class="nav-controls">
-            <button class="nav-btn" onclick="prevSlide()"><i class="fa-solid fa-arrow-left"></i></button>
-            <button class="nav-btn" onclick="nextSlide()"><i class="fa-solid fa-arrow-right"></i></button>
-        </div>
+        const App = () => {
+            const [activeSection, setActiveSection] = useState('part1');
+            const [scrollProgress, setScrollProgress] = useState(0);
 
-    </div>
+            useEffect(() => {
+                const handleScroll = () => {
+                    const totalScroll = document.documentElement.scrollTop;
+                    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    const scroll = totalScroll / windowHeight;
+                    setScrollProgress(Number(scroll));
 
-    <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
+                    const sections = SECTIONS.map(s => document.getElementById(s.id));
+                    let current = 'part1';
+                    for (const section of sections) {
+                        if (section) {
+                            const rect = section.getBoundingClientRect();
+                            if (rect.top <= 300 && rect.bottom >= 300) {
+                                current = section.id;
+                                break;
+                            }
+                        }
+                    }
+                    setActiveSection(current);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
 
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === index) {
-                    slide.classList.add('active');
+            const scrollToSection = (id) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    window.scrollTo({ top: element.offsetTop - 100, behavior: 'smooth' });
                 }
-            });
-        }
+            };
 
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
+            return (
+                <div className="min-h-screen bg-[#F8FAFC]">
+                    {/* Cinematic Progress Bar */}
+                    <div className="fixed top-0 left-0 w-full h-1.5 bg-white/10 z-50 backdrop-blur-sm">
+                        <div 
+                            className="h-full bg-gradient-to-r from-gulliver-navy to-gulliver-blue shadow-[0_0_15px_rgba(0,51,141,0.5)] transition-all duration-100 ease-out"
+                            style={{ width: `${scrollProgress * 100}%` }}
+                        />
+                    </div>
 
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            showSlide(currentSlide);
-        }
+                    <div className="flex flex-col md:flex-row">
+                        
+                        {/* Sidebar Navigation */}
+                        <nav className="hidden md:block w-80 h-screen sticky top-0 border-r border-white/10 bg-gulliver-navy text-white p-12 overflow-y-auto no-scrollbar shadow-[20px_0_40px_rgba(0,0,0,0.1)] z-40">
+                            <div className="mb-16 relative">
+                                <h1 className="font-serif text-3xl font-black text-white tracking-tight leading-none mb-6">Gulliver<br/>Prep</h1>
+                                <div className="h-1 w-12 bg-gulliver-blue mb-6"></div>
+                                <div className="space-y-1">
+                                    <p className="text-[10px] text-blue-200 uppercase tracking-[0.25em] font-bold">College Essay</p>
+                                    <p className="text-[10px] text-blue-200 uppercase tracking-[0.25em] font-bold">Guide 2026-27</p>
+                                </div>
+                            </div>
+                            
+                            <ul className="space-y-6 relative">
+                                <div className="absolute left-[3px] top-2 bottom-2 w-[1px] bg-blue-900/50" />
+                                {SECTIONS.map((section) => {
+                                    const isActive = activeSection === section.id;
+                                    return (
+                                        <li key={section.id} className="relative pl-8 group">
+                                            {isActive && (
+                                                <span className="absolute left-0 top-2 w-2 h-2 bg-gulliver-blue rounded-full shadow-[0_0_10px_#00338D]"></span>
+                                            )}
+                                            <button
+                                                onClick={() => scrollToSection(section.id)}
+                                                className={`text-sm text-left transition-all duration-500 group-hover:translate-x-1 ${
+                                                    isActive 
+                                                        ? 'font-bold text-white' 
+                                                        : 'text-blue-200/60 font-medium hover:text-white'
+                                                }`}
+                                            >
+                                                {section.title.split(': ')[1]}
+                                            </button>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </nav>
 
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight') nextSlide();
-            if (e.key === 'ArrowLeft') prevSlide();
-        });
+                        {/* Main Content Area */}
+                        <main className="flex-1 w-full max-w-[120ch] mx-auto relative">
+                            
+                            {/* Mobile Header */}
+                            <div className="md:hidden px-6 pt-12 pb-6 bg-gulliver-navy shadow-lg relative z-40">
+                                <h1 className="font-serif text-3xl font-black text-white mb-2">Gulliver Prep</h1>
+                                <p className="text-xs text-blue-200 uppercase tracking-widest">College Essay Guide 2026-27</p>
+                            </div>
+
+                            <div className="px-6 md:px-20 lg:px-32">
+                                
+                                {/* PART 1: HERO */}
+                                <Section id="part1" title="The Mindset Shift" className="animate-fade-in pt-32 md:pt-48">
+                                    <h2 className="font-serif text-5xl md:text-7xl text-gulliver-navy mb-16 font-bold tracking-tight leading-[0.9]">
+                                        The College Essay<br/>
+                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-gulliver-blue to-cyan-500">Is Different.</span>
+                                    </h2>
+                                    
+                                    <div className="grid md:grid-cols-12 gap-12">
+                                        <div className="md:col-span-8 prose prose-lg prose-slate text-slate-600 leading-loose">
+                                            <p className="font-serif text-2xl md:text-3xl text-slate-800 leading-relaxed mb-8">
+                                                It's not about what you've learned. It's about who you are.
+                                            </p>
+                                            <p>
+                                                Academic essays have clear rubrics and established structures. They test what you've <strong className="text-gulliver-navy">learned</strong>. The college essay asks you to do something harder: look at your own life and figure out what you actually want to say about it.
+                                            </p>
+                                            <div className="my-16 pl-8 border-l-4 border-gulliver-navy py-4 relative">
+                                                <div className="absolute -left-1.5 top-0 w-3 h-3 bg-gulliver-navy rounded-full"></div>
+                                                <div className="absolute -left-1.5 bottom-0 w-3 h-3 bg-gulliver-navy rounded-full"></div>
+                                                <p className="font-serif text-2xl md:text-4xl text-slate-800 italic leading-tight">
+                                                    "This isn't a greatest hits reel. It's about <span className="text-gulliver-blue">discovery</span>."
+                                                </p>
+                                            </div>
+                                            <p className="font-bold text-slate-800 text-xl">
+                                                Between the grades, the activities, and the accomplishments on your transcript, who are you?
+                                            </p>
+                                            <p>
+                                                Before you can answer that, you need to find your material. The students who write the strongest essays spend time here—exploring their experiences, finding moments that matter, and drafting to discover what they actually have to say. Don't skip this step.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </Section>
+
+                                {/* PART 2 */}
+                                <Section id="part2" title="The Prompts">
+                                    <h2 className="font-serif text-5xl md:text-6xl text-gulliver-navy mb-8 font-bold tracking-tight">The Seven<br/>Doorways</h2>
+                                    <p className="text-slate-500 text-xl mb-12 font-light max-w-2xl">Don't worry about picking the "right" one. Worry about picking the one that lets you tell the honest story.</p>
+                                    
+                                    <PromptCarousel />
+                                    
+                                    <div className="bg-stone-900 text-stone-100 p-12 md:p-16 rounded-3xl mt-24 relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-stone-800 to-transparent opacity-50"></div>
+                                        <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                                            <div>
+                                                <h3 className="font-serif text-3xl font-bold text-white mb-6">What They're Really Asking</h3>
+                                                <p className="text-stone-300 text-lg leading-relaxed mb-8">
+                                                    All seven prompts are just different doorways into the same room. The room is <strong>you</strong>.
+                                                    Admissions officers aren't judging you on which prompt you pick. They are judging you on <strong>clarity</strong> and <strong>depth</strong>.
+                                                </p>
+                                                <p className="font-serif text-2xl text-white border-l-2 border-gulliver-blue pl-6 italic">
+                                                    "What matters to you, and why?"
+                                                </p>
+                                            </div>
+                                            <div className="hidden md:flex justify-center">
+                                                <Icons.Lightbulb className="w-48 h-48 text-stone-700" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Section>
+
+                                {/* PART 3 */}
+                                <Section id="part3" title="Finding Material">
+                                    <div className="mb-24 text-center max-w-4xl mx-auto">
+                                        <span className="text-gulliver-blue font-bold tracking-widest text-xs uppercase mb-4 block">The Secret</span>
+                                        <h2 className="font-serif text-5xl md:text-7xl text-slate-900 mb-8 font-bold tracking-tighter">Small Moments,<br/>Big Insights.</h2>
+                                        <p className="text-2xl text-slate-600 leading-relaxed font-light font-serif">
+                                            The best essays are rarely about the championship game. They are about the conversation, the quiet decision, the pattern you noticed.
+                                        </p>
+                                    </div>
+
+                                    <div className="grid md:grid-cols-2 gap-8 mb-24">
+                                        <div className="glass p-10 rounded-2xl shadow-sm hover:shadow-md transition-all border-l-4 border-red-400">
+                                            <h4 className="font-bold text-red-500 mb-4 uppercase text-xs tracking-widest">The Myth</h4>
+                                            <p className="text-slate-700 font-medium text-2xl font-serif">"I need a tragedy or a massive accomplishment."</p>
+                                            <div className="h-px w-full bg-stone-200 my-8"></div>
+                                            <h4 className="font-bold text-emerald-600 mb-4 uppercase text-xs tracking-widest">The Reality</h4>
+                                            <p className="text-slate-600 text-lg leading-relaxed">You need <strong className="text-slate-900">friction</strong>. Look for a moment where you felt confused, challenged, or surprised.</p>
+                                        </div>
+                                        <div className="glass p-10 rounded-2xl shadow-sm hover:shadow-md transition-all border-l-4 border-red-400">
+                                            <h4 className="font-bold text-red-500 mb-4 uppercase text-xs tracking-widest">The Myth</h4>
+                                            <p className="text-slate-700 font-medium text-2xl font-serif">"I need to sound smart or heroic."</p>
+                                            <div className="h-px w-full bg-stone-200 my-8"></div>
+                                            <h4 className="font-bold text-emerald-600 mb-4 uppercase text-xs tracking-widest">The Reality</h4>
+                                            <p className="text-slate-600 text-lg leading-relaxed">You need to sound <strong className="text-slate-900">honest</strong>. Admissions officers can smell a "performance" from a mile away.</p>
+                                        </div>
+                                    </div>
+
+                                    <h3 className="font-serif text-3xl text-slate-800 mb-12 flex items-center gap-4">
+                                        <span className="w-12 h-12 rounded-full bg-gulliver-navy text-white flex items-center justify-center text-xl font-bold">1</span>
+                                        The "Zoom-In" Exercise
+                                    </h3>
+                                    <div className="grid md:grid-cols-3 gap-8">
+                                        {ZOOM_CARDS.map((card, idx) => (
+                                            <FlipCard key={idx} {...card} />
+                                        ))}
+                                    </div>
+                                </Section>
+
+                                {/* PART 4 */}
+                                <Section id="part4" title="The Core Problem">
+                                    <div className="grid md:grid-cols-12 gap-12 items-center">
+                                        <div className="md:col-span-5">
+                                            <h2 className="font-serif text-5xl md:text-6xl text-slate-900 mb-8 font-bold tracking-tight">The "And Then"<br/>Trap.</h2>
+                                            <p className="text-xl text-slate-600 mb-8 font-light leading-relaxed">
+                                                Most students think the job is to tell the whole story first, then add reflection at the end. That is backward. You don't owe the reader the full story. You owe them your thinking.
+                                            </p>
+                                        </div>
+                                        <div className="md:col-span-7">
+                                            <ComparisonTable />
+                                        </div>
+                                    </div>
+                                </Section>
+
+                                {/* PART 5 */}
+                                <Section id="part5" title="The Tools">
+                                    <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+                                        <div>
+                                            <h2 className="font-serif text-5xl md:text-7xl text-gulliver-navy mb-6 font-bold tracking-tight">The Six<br/>Moves</h2>
+                                            <p className="text-slate-500 text-xl">Specific tools to interrupt the narrative and force reflection.</p>
+                                        </div>
+                                        <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 max-w-md">
+                                            <p className="text-sm text-gulliver-navy font-bold uppercase tracking-widest mb-2">Architect's Note</p>
+                                            <p className="text-slate-700 italic font-serif text-sm">"The narrative momentum crushes the insight. These moves act as speed bumps for your story."</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        {SIX_MOVES.map((move, i) => (
+                                            <div key={i} className="group bg-white p-10 rounded-3xl border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 relative overflow-hidden">
+                                                <div className="absolute top-0 right-0 w-32 h-32 bg-stone-50 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-150 group-hover:bg-blue-50 duration-500"></div>
+                                                <div className="relative z-10">
+                                                    <div className="flex items-center gap-4 mb-6 text-stone-300 group-hover:text-gulliver-navy transition-colors">
+                                                        <div className="p-3 bg-stone-50 group-hover:bg-white rounded-2xl group-hover:shadow-lg transition-all">
+                                                            {move.icon}
+                                                        </div>
+                                                        <h4 className="font-bold text-xl font-serif text-stone-800">{move.title}</h4>
+                                                    </div>
+                                                    <p className="text-slate-600 mb-6 font-medium text-lg min-h-[3.5rem]">{move.action}</p>
+                                                    <div className="pl-4 border-l-2 border-stone-200 group-hover:border-gulliver-blue transition-colors">
+                                                        <p className="text-stone-400 text-sm italic font-serif">"{move.example}"</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </Section>
+
+                                {/* PART 6 */}
+                                <Section id="part6" title="Diagnostics">
+                                    <h2 className="font-serif text-5xl md:text-6xl text-slate-900 mb-16 font-bold tracking-tight">The Field Guide<br/>to Pitfalls</h2>
+                                    <div className="grid md:grid-cols-2 gap-8">
+                                        {TROUBLESHOOTING.map((item, idx) => (
+                                            <DiagnosticCard 
+                                                key={idx}
+                                                title={item.title}
+                                                content={item.content}
+                                            />
+                                        ))}
+                                    </div>
+                                </Section>
+
+                                {/* PART 7 */}
+                                <Section id="part7" title="Conclusion">
+                                    <div className="bg-gulliver-navy text-white rounded-[3rem] p-12 md:p-32 text-center relative overflow-hidden shadow-2xl">
+                                        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/50 to-transparent"></div>
+                                        <div className="relative z-10 max-w-4xl mx-auto">
+                                            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-12 leading-tight">The hardest part isn't the writing. It's the honesty.</h2>
+                                            <div className="prose prose-xl prose-invert mx-auto mb-16 opacity-90 font-light leading-loose">
+                                                <p>
+                                                    You're 17 or 18 years old, and you're being asked to write about yourself with clarity and self-awareness to a room full of strangers who will judge you. That's vulnerable. It's uncomfortable. And it's worth doing well. Don't perform. Don't write what you think they want. Write what's actually true.
+                                                </p>
+                                            </div>
+                                            <p className="text-2xl md:text-3xl font-serif text-blue-200 font-bold italic">They'll know the difference.</p>
+                                        </div>
+                                    </div>
+                                </Section>
+                                
+                                <Footer />
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
